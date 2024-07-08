@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Thumbnail Downloader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .input-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        input {
+            flex: 1;
+            padding: 10px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 25px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>YouTube Thumbnail Downloader</h1>
+        <div class="input-container">
+            <input type="text" id="videoUrl" placeholder="Enter YouTube Video URL">
+            <button onclick="getThumbnail()">Get Thumbnail</button>
+        </div>
+        <div id="thumbnailContainer"></div>
+    </div>
+
+    <script>
+        function getThumbnail() {
+            const videoUrl = document.getElementById('videoUrl').value;
+            const videoId = getVideoId(videoUrl);
+
+            if (videoId) {
+                const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+                const thumbnailContainer = document.getElementById('thumbnailContainer');
+                thumbnailContainer.innerHTML = `<img src="${thumbnailUrl}" alt="YouTube Thumbnail">`;
+            } else {
+                alert('Invalid YouTube Video URL');
+            }
+        }
+
+        function getVideoId(url) {
+            const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+            const match = url.match(regex);
+            return match ? match[1] : null;
+        }
+    </script>
+</body>
+</html>
